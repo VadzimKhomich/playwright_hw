@@ -19,6 +19,7 @@
   "homepage": "https://github.com/VadzimKhomich/playwright_hw#readme",
   "description": "",
   "devDependencies": {
+    "@faker-js/faker": "^9.7.0",
     "@playwright/test": "^1.51.1",
     "@types/node": "^22.14.1"
   }
