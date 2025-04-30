@@ -33,7 +33,7 @@ test.describe("[UI] [Sales Portal] Create Customer", async () => {
         await newCustomerPage.waitForNotification(NOTIFICATIONS.CUSTOMER_CREATED)
         await customersPage.waitForOpened()
         //CheckCreatedUser
-        customersPage.checkCreatedCustomer(customer)
+        await customersPage.checkCreatedCustomer(customer)
 
     })
 })

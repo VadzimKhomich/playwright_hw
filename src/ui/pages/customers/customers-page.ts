@@ -5,6 +5,9 @@ import { ICustomer } from "types/customer.types";
 export class CustomersPage extends SalesPortal {
     addCustomerBtn = this.page.getByRole("button", { name: "Add Customer" })
     uniqueElement = this.addCustomerBtn
+    table = this.page.locator(".table")
+    headers = this.table.locator("thead th")
+    row = this.table.locator("tbody tr:nth-child(1) td")
 
 
     async addCustomerBntClick() {
@@ -12,11 +15,9 @@ export class CustomersPage extends SalesPortal {
     }
 
     async createdCustomerData() {
-        const table = this.page.locator(".table")
-        const headers = await table.locator("thead th").allInnerTexts()
-        const row = await table.locator("tbody tr:nth-child(1) td").allInnerTexts();
-        const rowResulrData = row.slice(0, 3)
-
+        const rowData = await this.row.allInnerTexts()
+        const headers = await this.headers.allInnerTexts()
+        const rowResulrData = rowData.slice(0, 3)
         const createdCustomer = rowResulrData.reduce((result, cell, index) => {
             result[headers[index]] = cell
             return result
@@ -25,8 +26,7 @@ export class CustomersPage extends SalesPortal {
     }
 
     async checkCreatedCustomer(customer: ICustomer) {
-        const table = this.page.locator(".table")
-        const headers = await table.locator("thead th").allInnerTexts()
+        const headers = await this.headers.allInnerTexts()
         const createdCustomer = await this.createdCustomerData()
         expect(createdCustomer).toMatchObject({
             [headers[0]]: customer.email,
