@@ -1,9 +1,10 @@
+import { USER_LOGIN, USER_PASSWORD } from "config/environment";
 import { IUser } from "../types/user.type";
 
 export function getUser(params?: Partial<IUser>): IUser {
     return {
-        email: "vad",
-        password: "1q2w3e4r5t",
+        email: USER_LOGIN,
+        password: USER_PASSWORD,
         ...params
     }
 }

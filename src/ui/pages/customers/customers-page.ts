@@ -1,37 +1,72 @@
 import { expect, Locator } from "@playwright/test";
 import { SalesPortal } from "../sales-portal";
-import { ICustomer } from "types/customer.types";
+import { ICustomer, ICustomerInTable } from "types/customer.types";
+import { COUNTRIES } from "data/customers/countries.data";
+import { DeleteModal } from "../modals/customers/delete.page";
 
 export class CustomersPage extends SalesPortal {
-    addCustomerBtn = this.page.getByRole("button", { name: "Add Customer" })
-    uniqueElement = this.addCustomerBtn
-    table = this.page.locator(".table")
-    headers = this.table.locator("thead th")
-    row = this.table.locator("tbody tr:nth-child(1) td")
+    readonly deleteModal = new DeleteModal(this.page)
+  readonly addCustomerBtn = this.page.getByRole("button", {
+    name: "Add Customer",
+  });
+  readonly uniqueElement = this.addCustomerBtn;
+  readonly tableRows = this.page.locator("#table-customers tbody tr");
+  readonly tableRowByEmail = (email: string) =>
+    this.tableRows.filter({ has: this.page.getByText(email) });
+  readonly emailCell = (email: string) =>
+    this.tableRowByEmail(email).locator("td:nth-child(1)");
+  readonly nameCell = (email: string) =>
+    this.tableRowByEmail(email).locator("td:nth-child(2)");
+  readonly countryCell = (email: string) =>
+    this.tableRowByEmail(email).locator("td:nth-child(3)");
+  readonly createdOnCell = (email: string) =>
+    this.tableRowByEmail(email).locator("td:nth-child(4)");
+  readonly detailsBtn = (email: string) =>
+    this.tableRowByEmail(email).getByTitle("Details");
+  readonly editBtn = (email: string) =>
+    this.tableRowByEmail(email).getByTitle("Edit");
+  readonly deleteBtn = (email: string) =>
+    this.tableRowByEmail(email).getByTitle("Delete");
 
+  async clickTableAction(
+    userEmail: string,
+    action: "edit" | "details" | "delete"
+  ) {
+    const actionButtons = {
+      edit: this.editBtn(userEmail),
+      delete: this.deleteBtn(userEmail),
+      details: this.detailsBtn(userEmail),
+    };
+    await actionButtons[action].click();
+  }
 
-    async addCustomerBntClick() {
-        await this.addCustomerBtn.click()
+  async addCustomerBntClick() {
+    await this.addCustomerBtn.click();
+  }
+
+  async getCustomerData(customerEmail: string) {
+    const [email, name, country] = await this.tableRowByEmail(customerEmail)
+      .locator("td")
+      .allInnerTexts();
+
+    return {
+      email,
+      name,
+      country: country as COUNTRIES,
+    };
+  }
+
+  async getDataTable() {
+    const tableData: Array<ICustomerInTable> = [];
+    const rows = await this.tableRows.all();
+    for (const row of rows) {
+      const [email, name, country] = await row.locator("td").allInnerTexts();
+      tableData.push({
+        email,
+        name,
+        country: country as COUNTRIES,
+      });
     }
-
-    async createdCustomerData() {
-        const rowData = await this.row.allInnerTexts()
-        const headers = await this.headers.allInnerTexts()
-        const rowResulrData = rowData.slice(0, 3)
-        const createdCustomer = rowResulrData.reduce((result, cell, index) => {
-            result[headers[index]] = cell
-            return result
-        }, {} as Record<string, string>)
-        return createdCustomer
-    }
-
-    async checkCreatedCustomer(customer: ICustomer) {
-        const headers = await this.headers.allInnerTexts()
-        const createdCustomer = await this.createdCustomerData()
-        expect(createdCustomer).toMatchObject({
-            [headers[0]]: customer.email,
-            [headers[1]]: customer.name,
-            [headers[2]]: customer.country
-        })
-    }
+    return tableData
+  }
 }

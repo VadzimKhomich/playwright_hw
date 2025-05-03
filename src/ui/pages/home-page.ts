@@ -3,11 +3,11 @@ import { SalesPortal } from "./sales-portal";
 import { ModuleName } from "types/home.types";
 
 export class HomePage extends SalesPortal {
-    uniqueElement = this.page.locator(".welcome-text")
-    customerButton = this.page.getByRole("link", {name: "Customers"})
-    ordersButton = this.page.getByRole("link", {name: "Orders"})
-    productsButton = this.page.getByRole("link", {name: "Products"})
-    managersButton = this.page.getByRole("link", {name: "Managers"})
+    readonly uniqueElement = this.page.locator(".welcome-text")
+    readonly customerButton = this.page.getByRole("link", {name: "Customers"})
+    readonly ordersButton = this.page.getByRole("link", {name: "Orders"})
+    readonly productsButton = this.page.getByRole("link", {name: "Products"})
+    readonly managersButton = this.page.getByRole("link", {name: "Managers"})
 
     async clickModuleButton(moduleName: ModuleName) {
         const moduleNames: Record<ModuleName, Locator> = {
