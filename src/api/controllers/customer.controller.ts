@@ -1,3 +1,4 @@
+import { APIRequestContext } from "@playwright/test";
 import { RequestApi } from "api/apiClients/request";
 import { apiConfig } from "config/api.config";
 import { IRequestOptions } from "types/api.types";
@@ -5,9 +6,13 @@ import { ICustomer, ICustomerResponse, ICustomersResponse } from "types/customer
 import { convertRequestParams } from "utilits/requestParams";
 
 export class CustomerController {
-  constructor(private request = new RequestApi()) {}
+  private request: RequestApi
+  constructor(private context: APIRequestContext) {
+    this.request = new RequestApi(context)
+  }
   async create(body: ICustomer, token: string) {
     const options: IRequestOptions = {
+      baseURL: apiConfig.BASE_URL,
       url: apiConfig.ENDPOINTS.CUSTOMERS,
       method: "post",
       data: body,
@@ -21,6 +26,7 @@ export class CustomerController {
 
   async getById(id: string, token: string) {
     const options: IRequestOptions = {
+      baseURL: apiConfig.BASE_URL,
       url: apiConfig.ENDPOINTS.CUSTOMER_BY_ID(id),
       method: "get",
       headers: {
@@ -33,6 +39,7 @@ export class CustomerController {
 
   async getAll(token: string, params?: Record<string, string>) {
     const options: IRequestOptions = {
+      baseURL: apiConfig.BASE_URL,
       url:
         apiConfig.ENDPOINTS.CUSTOMERS +
         (params ? convertRequestParams(params) : ""),
@@ -47,6 +54,7 @@ export class CustomerController {
 
   async update(id: string, body: ICustomer, token: string) {
     const options: IRequestOptions = {
+      baseURL: apiConfig.BASE_URL,
       url: apiConfig.ENDPOINTS.CUSTOMER_BY_ID(id),
       method: "put",
       headers: {
@@ -59,6 +67,7 @@ export class CustomerController {
 
   async delete(id: string, token: string) {
     const options: IRequestOptions = {
+      baseURL: apiConfig.BASE_URL,
       url: apiConfig.ENDPOINTS.CUSTOMER_BY_ID(id),
       method: "delete",
       headers: {
