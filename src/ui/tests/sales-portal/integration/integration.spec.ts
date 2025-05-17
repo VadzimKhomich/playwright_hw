@@ -9,27 +9,27 @@ test.describe("[UI] [HomePage] [Metrics component]", async () => {
     {
       testName: "Order this Year",
       metricValue: "42",
-      metricName: "orders" as Metric,
+      metric: "orders" as Metric,
     },
     {
       testName: "New Customers",
       metricValue: "43",
-      metricName: "customers" as Metric,
+      metric: "customers" as Metric,
     },
     {
       testName: "Canceled Orders",
       metricValue: "44",
-      metricName: "canceledOredrs" as Metric,
+      metric: "canceledOredrs" as Metric,
     },
     {
       testName: "Total Revenue",
       metricValue: "$" + numeral("9000000").format("0.0a"),
-      metricName: "revenue" as Metric,
+      metric: "revenue" as Metric,
     },
     {
       testName: "Avg Order Value",
       metricValue: "$" + numeral("9000").format("0.0a"),
-      metricName: "averageOredrs" as Metric,
+      metric: "averageOredrs" as Metric,
     },
   ];
 
@@ -40,14 +40,14 @@ test.describe("[UI] [HomePage] [Metrics component]", async () => {
     await loginPage.clickLoginBtn();
   });
 
-  metricsData.forEach(({ testName, metricValue, metricName }) => {
+  metricsData.forEach(({ testName, metricValue, metric }) => {
     test(`Should display correct ${testName} metric`, async ({
       homePage,
       mock,
     }) => {
-      await mock.metric(metricValue, STATUS_CODES.OK, metricName);
+      await mock.metric(metricValue, STATUS_CODES.OK, metric);
       await homePage.waitForOpened();
-      const actual = await homePage.getMetric(metricName);
+      const actual = await homePage.getMetric(metric);
       expect(actual).toBe(metricValue);
     });
   });
