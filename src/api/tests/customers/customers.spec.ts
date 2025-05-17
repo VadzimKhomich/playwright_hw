@@ -8,6 +8,7 @@ import { ICustomer } from "types/customer.types";
 import { validateSchema } from "utilits/validation/validation.schema";
 
 test.describe("[API] [SalesPortal] [Customers]", () => {
+  
   test("Should get Customers list", async ({
     customerController,
     signInController,

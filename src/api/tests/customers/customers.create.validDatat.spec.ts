@@ -4,13 +4,17 @@ import { USER_LOGIN, USER_PASSWORD } from "config/environment";
 import { STATUS_CODES } from "data/status.codes";
 
 test.describe("[API] [SalesPortal] [Create customer with valid parametrs]", () => {
+let token: string
+  test.beforeAll(async({signInController}) => {
+    const loginResponse = await signInController.signIn({
+      username: USER_LOGIN,
+      password: USER_PASSWORD,
+    });
+    token = loginResponse.headers["authorization"];
+  })
   createCustomerValidData.forEach(({ testName, customer }) => {
-    test(testName, async ({ signInController, customerController }) => {
-      const loginResponse = await signInController.signIn({
-        username: USER_LOGIN,
-        password: USER_PASSWORD,
-      });
-      const token = loginResponse.headers["authorization"];
+    test(testName, async ({ customerController }) => {
+
       const customerResponse = await customerController.create(customer, token);
       expect.soft(customerResponse.status).toBe(STATUS_CODES.CREATED);
       expect.soft(customerResponse.body.IsSuccess).toBe(true);
