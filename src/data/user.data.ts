@@ -3,7 +3,7 @@ import { ICredentials } from "../types/user.type";
 
 export function getUser(params?: Partial<ICredentials>): ICredentials {
     return {
-        email: USER_LOGIN,
+        username: USER_LOGIN,
         password: USER_PASSWORD,
         ...params
     }

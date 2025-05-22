@@ -1,4 +1,4 @@
-import { test as base } from "@playwright/test";
+import { test as base } from "fixtures/mock.fixture";
 import { CustomersPage } from "ui/pages/customers/customers-page";
 import { NewCustomerPage } from "ui/pages/customers/new-customer-page";
 import { HomePage } from "ui/pages/home-page";
