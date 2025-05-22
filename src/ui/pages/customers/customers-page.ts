@@ -5,7 +5,7 @@ import { COUNTRIES } from "data/customers/countries.data";
 import { DeleteModal } from "../modals/customers/delete.page";
 
 export class CustomersPage extends SalesPortal {
-    readonly deleteModal = new DeleteModal(this.page)
+  readonly deleteModal = new DeleteModal(this.page);
   readonly addCustomerBtn = this.page.getByRole("button", {
     name: "Add Customer",
   });
@@ -67,6 +67,6 @@ export class CustomersPage extends SalesPortal {
         country: country as COUNTRIES,
       });
     }
-    return tableData
+    return tableData;
   }
 }

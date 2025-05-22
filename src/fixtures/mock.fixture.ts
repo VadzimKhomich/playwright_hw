@@ -1,4 +1,5 @@
-import { Page, test as base } from "@playwright/test";
+import { test as base } from "fixtures/controllersFixture";
+import { Page } from "@playwright/test";
 import { apiConfig } from "config/api.config";
 import { STATUS_CODES } from "data/status.codes";
 import { Metric } from "types/home.types";
