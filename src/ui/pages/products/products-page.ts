@@ -6,20 +6,20 @@ export class ProductsPage extends SalesPortal {
     readonly uniqueElement = this.addProductButton
     //table
     readonly tableRow = this.page.locator("#table-products tbody tr")
-    readonly tableRowByUserName = (userName: string) => this.tableRow.filter({has: this.page.getByText(userName)})
-    readonly editBtn = (userName: string) => this.tableRowByUserName(userName).getByTitle("Edit")
-    readonly detailsBtn = (userName: string) => this.tableRowByUserName(userName).getByTitle("Details")
-    readonly deleteBtn = (userName: string) => this.tableRowByUserName(userName).getByTitle("Delete")
+    readonly tableRowByProductName = (productName: string) => this.tableRow.filter({has: this.page.getByText(productName)})
+    readonly editBtn = (productName: string) => this.tableRowByProductName(productName).getByTitle("Edit")
+    readonly detailsBtn = (productName: string) => this.tableRowByProductName(productName).getByTitle("Details")
+    readonly deleteBtn = (productName: string) => this.tableRowByProductName(productName).getByTitle("Delete")
 
     async clickAddProduct() {
         await this.addProductButton.click()
     }
 
-    async clicProductTableAction(userName: string, action: "edit" | "details" | "delete") {
+    async clicProductTableAction(productName: string, action: "edit" | "details" | "delete") {
         const actionButtons = {
-            edit: this.editBtn(userName),
-            details: this.detailsBtn(userName),
-            delete: this.deleteBtn(userName)
+            edit: this.editBtn(productName),
+            details: this.detailsBtn(productName),
+            delete: this.deleteBtn(productName)
         }
         await actionButtons[action].click()
     }
