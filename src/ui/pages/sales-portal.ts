@@ -1,15 +1,12 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { BasePage } from "./modals/base.page";
 
-export abstract class SalesPortal {
-  spinner: Locator;
-  notification: Locator;
-  closeNotificationBtn: Locator;
+export abstract class SalesPortal extends BasePage {
   abstract uniqueElement: Locator;
-  constructor(protected page: Page) {
-    this.spinner = page.locator(".spinner-border");
-    this.notification = page.locator(".toast-body");
-    this.closeNotificationBtn = page.locator("button[aria-label='Close']")
-  }
+
+  readonly spinner = this.page.locator(".spinner-border");
+  readonly notification = this.page.locator(".toast-body");
+  readonly closeNotificationBtn = this.page.locator("button[aria-label='Close']");
 
   async waitForSpinner() {
     await expect(this.spinner).toHaveCount(0);
