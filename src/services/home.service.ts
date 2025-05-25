@@ -3,6 +3,7 @@ import { ModuleName } from "types/home.types";
 import { CustomersPage } from "ui/pages/customers/customers-page";
 import { HomePage } from "ui/pages/home-page";
 import { ProductsPage } from "ui/pages/products/products-page";
+import { logStep } from "utilits/validation/reporter.utils";
 
 export class HomeUIService {
   homePage: HomePage;
@@ -13,7 +14,7 @@ export class HomeUIService {
     this.productPage = new ProductsPage(page);
     this.customersPage = new CustomersPage(page);
   }
-
+ @logStep()
   async openModule(moduleName: ModuleName) {
     await this.homePage.clickModuleButton(moduleName);
     switch (moduleName) {

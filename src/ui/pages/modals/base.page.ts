@@ -3,8 +3,16 @@ import { IResponse } from "types/api.types";
 
 export abstract class BasePage {
   constructor(protected page: Page) {}
+  async token(): Promise<string> {
+    const cookie = await this.page.context().cookies()
+    return cookie.find((el) => el.name === 'Authorization')!.value
+  }
 
-  async interceptRequest<T extends unknown[]>(url: string, triggerAction: (...args: T) => Promise<void>, ...args: T) {
+  async interceptRequest<T extends unknown[]>(
+    url: string,
+    triggerAction: (...args: T) => Promise<void>,
+    ...args: T
+  ) {
     const [request] = await Promise.all([
       this.page.waitForRequest((request) => request.url().includes(url)),
       triggerAction(...args),

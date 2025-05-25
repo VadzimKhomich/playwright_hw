@@ -3,6 +3,7 @@ import { createCustomerInvaliData } from "data/customers/api.customer.data";
 import { USER_LOGIN, USER_PASSWORD } from "config/environment";
 import { STATUS_CODES } from "data/status.codes";
 import { genereateCustomerData } from "data/customers/new-customer.data";
+import { TAGS } from "data/tags/tags.data";
 
 test.describe("[API] [SalesPortal] [Create customer with invalid parametrs]", () => {
   let token: string;
@@ -15,7 +16,7 @@ test.describe("[API] [SalesPortal] [Create customer with invalid parametrs]", ()
   });
 
   createCustomerInvaliData.forEach(({ testName, customer }) => {
-    test(testName, async ({ customerController }) => {
+    test(testName, {tag: [TAGS.API]}, async ({ customerController }) => {
       const customerResponse = await customerController.create(customer, token);
       expect.soft(customerResponse.status).toBe(STATUS_CODES.BAD_REQUEST);
       expect.soft(customerResponse.body.IsSuccess).toBe(false);
@@ -25,7 +26,7 @@ test.describe("[API] [SalesPortal] [Create customer with invalid parametrs]", ()
     });
   });
 
-  test("Should not to create customer with existing email", async ({
+  test("Should not to create customer with existing email", {tag: [TAGS.API]}, async ({
     signInController,
     customerController,
   }) => {

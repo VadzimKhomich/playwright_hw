@@ -3,6 +3,7 @@ import { USER_LOGIN, USER_PASSWORD } from "config/environment";
 import { getUser } from "data/user.data";
 import { HomePage } from "ui/pages/home-page";
 import { LoginPage } from "ui/pages/login-page";
+import { logStep } from "utilits/validation/reporter.utils";
 
 export class SignInUIService {
   private signInPage: LoginPage;
@@ -12,7 +13,7 @@ export class SignInUIService {
     this.signInPage = new LoginPage(page);
     this.homePage = new HomePage(page);
   }
-
+  @logStep("Sign in")
   async signInAsLocalUser() {
     await this.signInPage.goToSalesPortal();
     const user = getUser();

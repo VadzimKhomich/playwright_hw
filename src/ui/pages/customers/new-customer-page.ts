@@ -1,6 +1,7 @@
 import { Locator } from "@playwright/test";
 import { SalesPortal } from "../sales-portal";
 import { ICustomer } from "types/customer.types";
+import { logStep } from "utilits/validation/reporter.utils";
 
 export class NewCustomerPage extends SalesPortal {
   readonly saveCustomerBtn = this.page.locator("#save-new-customer");
@@ -15,6 +16,7 @@ export class NewCustomerPage extends SalesPortal {
   readonly phoneInput = this.page.locator("#inputPhone");
   readonly notesInput = this.page.locator("#textareaNotes");
 
+  @logStep("Fill customers fields")
   async fillNewCustomerFields(customer: Partial<ICustomer>) {
     customer.email && (await this.emailInput.fill(customer.email));
     customer.name && (await this.nameInput.fill(customer.name));
@@ -28,6 +30,7 @@ export class NewCustomerPage extends SalesPortal {
     customer.notes && (await this.notesInput.fill(customer.notes));
   }
 
+  @logStep("Click save new customer")
   async clickSaveNewCustomer() {
     await this.saveCustomerBtn.click();
   }

@@ -2,6 +2,7 @@ import { test, expect } from "fixtures/controllersFixture";
 import { createCustomerValidData } from "data/customers/api.customer.data";
 import { USER_LOGIN, USER_PASSWORD } from "config/environment";
 import { STATUS_CODES } from "data/status.codes";
+import { TAGS } from "data/tags/tags.data";
 
 test.describe("[API] [SalesPortal] [Create customer with valid parametrs]", () => {
 let token: string
@@ -13,7 +14,7 @@ let token: string
     token = loginResponse.headers["authorization"];
   })
   createCustomerValidData.forEach(({ testName, customer }) => {
-    test(testName, async ({ customerController }) => {
+    test(testName, {tag: [TAGS.API]}, async ({ customerController }) => {
 
       const customerResponse = await customerController.create(customer, token);
       expect.soft(customerResponse.status).toBe(STATUS_CODES.CREATED);

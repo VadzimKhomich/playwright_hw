@@ -3,9 +3,10 @@ import { getUser } from "data/user.data";
 import { NOTIFICATIONS } from "data/notification.data";
 import { genereateCustomerData } from "data/customers/new-customer.data";
 import _ from "lodash";
+import { TAGS } from "data/tags/tags.data";
 
 test.describe("[UI] [Sales Portal] Create Customer", async () => {
-  test("Should create customer", async ({
+  test("Should create customer",{tag: [TAGS.REGRESSION, TAGS.SMOKE]}, async ({
     loginPage,
     homePage,
     customersPage,
@@ -13,9 +14,9 @@ test.describe("[UI] [Sales Portal] Create Customer", async () => {
   }) => {
     //LoginPage
     await loginPage.goToSalesPortal();
-    const user = getUser();
-    await loginPage.fillCredentials(user);
-    await loginPage.clickLoginBtn();
+    // const user = getUser();
+    // await loginPage.fillCredentials(user);
+    // await loginPage.clickLoginBtn();
     //HomePage
     await homePage.waitForOpened();
     await homePage.clickModuleButton("Customers");
