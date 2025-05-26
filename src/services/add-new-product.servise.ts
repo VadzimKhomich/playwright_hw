@@ -7,13 +7,14 @@ import { NewProductPage } from "ui/pages/products/add-new-product.page";
 import { ProductsPage } from "ui/pages/products/products-page";
 import { logStep } from "utilits/validation/reporter.utils";
 
-export class AddNewProductUIService {
-  private addNewProductPage: NewProductPage;
-  private productPage: ProductsPage;
-  constructor(page: Page) {
-    this.addNewProductPage = new NewProductPage(page);
-    this.productPage = new ProductsPage(page);
-  }
+export class PageHolder {
+  constructor(protected page: Page) {}
+}
+
+export class AddNewProductUIService extends PageHolder {
+  private addNewProductPage: NewProductPage = new NewProductPage(this.page);
+  private productPage: ProductsPage = new ProductsPage(this.page);
+  
   @logStep("Create Product")
   async create(productData?: IProduct) {
     const data = generateProduct(productData);

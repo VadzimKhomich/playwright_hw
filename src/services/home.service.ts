@@ -6,9 +6,9 @@ import { ProductsPage } from "ui/pages/products/products-page";
 import { logStep } from "utilits/validation/reporter.utils";
 
 export class HomeUIService {
-  homePage: HomePage;
-  customersPage: CustomersPage;
-  productPage: ProductsPage;
+  private readonly homePage: HomePage;
+  private readonly customersPage: CustomersPage;
+  private readonly productPage: ProductsPage;
   constructor(private page: Page) {
     this.homePage = new HomePage(page);
     this.productPage = new ProductsPage(page);
