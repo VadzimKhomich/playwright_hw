@@ -3,9 +3,10 @@ import { USER_LOGIN, USER_PASSWORD } from "config/environment";
 import { loginChema } from "data/shemas/login/login.shema";
 import { STATUS_CODES } from "data/status.codes";
 import { validateSchema } from "utilits/validation/validation.schema";
+import { TAGS } from "data/tags/tags.data";
 
 test.describe("[API] [SalesPortl] [Login]", () => {
-  test("Should login with smoke data", async ({ signInController }) => {
+  test("Should login with smoke data", {tag: [TAGS.API]}, async ({ signInController }) => {
     const loginResponse = await signInController.signIn({
       username: USER_LOGIN,
       password: USER_PASSWORD,

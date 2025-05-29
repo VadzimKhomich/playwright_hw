@@ -3,6 +3,7 @@ import { SalesPortal } from "../sales-portal";
 import { ICustomer, ICustomerInTable } from "types/customer.types";
 import { COUNTRIES } from "data/customers/countries.data";
 import { DeleteModal } from "../modals/customers/delete.page";
+import { logStep } from "utilits/validation/reporter.utils";
 
 export class CustomersPage extends SalesPortal {
   readonly deleteModal = new DeleteModal(this.page);
@@ -28,6 +29,7 @@ export class CustomersPage extends SalesPortal {
   readonly deleteBtn = (email: string) =>
     this.tableRowByEmail(email).getByTitle("Delete");
 
+  @logStep("Click on action button")
   async clickTableAction(
     userEmail: string,
     action: "edit" | "details" | "delete"
@@ -40,10 +42,12 @@ export class CustomersPage extends SalesPortal {
     await actionButtons[action].click();
   }
 
+  @logStep("Click add customer")
   async addCustomerBntClick() {
     await this.addCustomerBtn.click();
   }
 
+  @logStep("Get customer data")
   async getCustomerData(customerEmail: string) {
     const [email, name, country] = await this.tableRowByEmail(customerEmail)
       .locator("td")
@@ -56,6 +60,7 @@ export class CustomersPage extends SalesPortal {
     };
   }
 
+  @logStep("Get Customer table data")
   async getDataTable() {
     const tableData: Array<ICustomerInTable> = [];
     const rows = await this.tableRows.all();

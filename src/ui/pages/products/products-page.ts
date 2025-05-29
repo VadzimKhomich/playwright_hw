@@ -1,4 +1,5 @@
 
+import { logStep } from "utilits/validation/reporter.utils";
 import { SalesPortal } from "../sales-portal";
 
 export class ProductsPage extends SalesPortal {
@@ -11,10 +12,12 @@ export class ProductsPage extends SalesPortal {
     readonly detailsBtn = (productName: string) => this.tableRowByProductName(productName).getByTitle("Details")
     readonly deleteBtn = (productName: string) => this.tableRowByProductName(productName).getByTitle("Delete")
 
+    @logStep("Click add Product button")
     async clickAddProduct() {
         await this.addProductButton.click()
     }
 
+    @logStep("Click action button")
     async clicProductTableAction(productName: string, action: "edit" | "details" | "delete") {
         const actionButtons = {
             edit: this.editBtn(productName),

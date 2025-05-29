@@ -6,10 +6,11 @@ import { STATUS_CODES } from "data/status.codes";
 import _ from "lodash";
 import { ICustomer } from "types/customer.types";
 import { validateSchema } from "utilits/validation/validation.schema";
+import { TAGS } from "data/tags/tags.data";
 
 test.describe("[API] [SalesPortal] [Customers]", () => {
   
-  test("Should get Customers list", async ({
+  test("Should get Customers list", {tag: [TAGS.API]}, async ({
     customerController,
     signInController,
   }) => {

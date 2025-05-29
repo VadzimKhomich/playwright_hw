@@ -1,6 +1,9 @@
 import { Locator } from "@playwright/test";
 import { SalesPortal } from "./sales-portal";
 import { Metric, ModuleName } from "types/home.types";
+import { apiConfig } from "config/api.config";
+import { SALES_PORTAL_URL } from "config/environment";
+import { logStep } from "utilits/validation/reporter.utils";
 
 export class HomePage extends SalesPortal {
   readonly uniqueElement = this.page.locator(".welcome-text");
@@ -17,7 +20,7 @@ export class HomePage extends SalesPortal {
   readonly canceledOredrsMetric = this.page.locator(
     "#canceled-orders-container p"
   );
-
+  @logStep("Click Module Button")
   async clickModuleButton(moduleName: ModuleName) {
     const moduleNames: Record<ModuleName, Locator> = {
       Customers: this.customerButton,
@@ -27,7 +30,7 @@ export class HomePage extends SalesPortal {
     };
     await moduleNames[moduleName].click();
   }
-
+  @logStep("Get Metric")
   async getMetric(metric: Metric) {
     switch (metric) {
       case "orders":
@@ -41,5 +44,9 @@ export class HomePage extends SalesPortal {
       case "canceledOredrs":
         return this.canceledOredrsMetric.innerText();
     }
+  }
+  @logStep("Open Sales Portal")
+  async openSalesPortal() {
+    await this.page.goto(SALES_PORTAL_URL);
   }
 }
