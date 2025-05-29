@@ -17,7 +17,7 @@ test.describe("[E2E] [UI] [Product] [Create]", () => {
     await productsUIService.openAddNewPage();
     const createdProduct = await addNewProductPage.create();
     id = createdProduct._id;
-    token = await homePage.token()
+    token = await homePage.getTokenFromBrowserCookies()
     const response = await productController.getById(createdProduct._id, token );
     expect(response.status).toBe(STATUS_CODES.OK);
   });

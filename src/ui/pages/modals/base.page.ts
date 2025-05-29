@@ -3,7 +3,7 @@ import { IResponse } from "types/api.types";
 
 export abstract class BasePage {
   constructor(protected page: Page) {}
-  async token(): Promise<string> {
+  async getTokenFromBrowserCookies(): Promise<string> {
     const cookie = await this.page.context().cookies()
     return cookie.find((el) => el.name === 'Authorization')!.value
   }
