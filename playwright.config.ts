@@ -59,7 +59,7 @@ export default defineConfig({
         storageState: "src/.auth/user.json",
       },
       dependencies: ["setup"],
-      testDir: "./src/ui/tests/sales-portal",
+      testDir: "./src/ui/tests",
     },
     {
       name: "sales-portal-api",
