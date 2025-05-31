@@ -1,9 +1,9 @@
-import { sendNotification } from "utils/notifications/telegram";
+import { sendNotification } from "../utilits/notifications/telegram";
 
 export default async function () {
   await sendNotification(`Test run finished!
     
 Link to deployed report:
 
-https://anatoly-karpovich.github.io/aqa-3-playwright/allure-report/#`);
+https://github.com/VadzimKhomich/playwright_hw/allure-report/#`);
 }
