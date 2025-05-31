@@ -5,5 +5,5 @@ export default async function () {
     
 Link to deployed report:
 
-https://github.com/VadzimKhomich/playwright_hw/allure-report/#`);
+https://vadzimkhomich.github.io/playwright_hw/allure-report/#`);
 }
