@@ -15,7 +15,8 @@ dotenv.config();
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  globalSetup: require.resolve("./src/config/global.setup"),
+  globalSetup: require.resolve("./src/config/global.setup.ts"),
+  globalTeardown: require.resolve("./src/config/global.teardown"),
   testDir: "./src/",
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -26,7 +27,7 @@ export default defineConfig({
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: [["html"], ["allure-playwright"]],
+  reporter: [["html"], ["list"], ["allure-playwright"]],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
