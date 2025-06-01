@@ -15,7 +15,7 @@ dotenv.config();
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
-  globalSetup: require.resolve("./src/config/global.setup"),
+  globalSetup: require.resolve("./src/config/global.setup.ts"),
   globalTeardown: require.resolve("./src/config/global.teardown"),
   testDir: "./src/",
   /* Run tests in files in parallel */
