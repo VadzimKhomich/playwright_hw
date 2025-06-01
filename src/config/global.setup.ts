@@ -4,5 +4,4 @@ import { rimrafSync } from 'rimraf';
 
 export default function globalSetup() {
   rimrafSync("allure-results")
-  console.log("test")
 }
